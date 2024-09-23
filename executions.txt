@@ -1,4 +1,4 @@
-To execute all tests in headless mode
+**To execute all tests in headless mode**
 pytest
 
 To execute in specific browser in headed mode(default is chromium)
