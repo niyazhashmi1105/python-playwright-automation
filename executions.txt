@@ -33,3 +33,18 @@ pytest -v -s --headed --screenshot=only-on-failure
 
 Capturing Videos(on, retain-on-failure, default is off)
 pytest -v -s --headed --video=retain-on-failure
+
+Passing base URL from CLI Command
+pytest -v -s --headed --base-url = <url_name>
+
+Generating Trace(on, retain-on-failure, default is off)
+pytest -v -s --headed --tracing=on --output=playwright-results
+
+Showing Trace
+playwright show-trace <path to trace.zip>
+
+Parallel execution in headed mode
+pytest --base-url https://www.saucedemo.com -n 5 --browser chromium --browser firefox --browser webkit --headed
+
+Parallel execution in headless mode
+pytest --base-url https://www.saucedemo.com -n 5 --browser chromium --browser firefox --browser webkit
