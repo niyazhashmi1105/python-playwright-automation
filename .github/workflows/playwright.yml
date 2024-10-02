@@ -52,7 +52,7 @@ jobs:
     - name: Publish report to Github Pages
       uses: peaceiris/actions-gh-pages@v3
       if: always()
-      env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          PERSONAL_TOKEN: ${{ secrets.MY_PERSONAL_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
