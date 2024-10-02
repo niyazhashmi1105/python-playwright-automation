@@ -33,7 +33,7 @@ jobs:
     - name: Run your tests
       run: pytest --alluredir reports/allure-results
     - name: Generate Allure Report
-      run: allure generate reports/allure-results
+      run: allure generate reports/allure-results --clean
     - name: Upload Allure Report
       uses: actions/upload-artifact@v4
       with:
