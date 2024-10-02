@@ -48,3 +48,7 @@ pytest --base-url https://www.saucedemo.com -n 5 --browser chromium --browser fi
 
 Parallel execution in headless mode
 pytest --base-url https://www.saucedemo.com -n 5 --browser chromium --browser firefox --browser webkit
+
+Generate Allure Report
+python3 -m pytest --alluredir reports/allure-results
+allure serve reports/allure-results
