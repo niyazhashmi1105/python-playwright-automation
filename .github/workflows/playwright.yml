@@ -25,9 +25,9 @@ jobs:
         sudo apt update
         sudo apt install openjdk-11-jdk
         cd /tmp
-        wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.21.0.tgz
-        tar -zxvf allure-2.21.0.tgz
-        sudo mv allure-2.21.0 /opt/allure
+        wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.30.0.tgz
+        tar -zxvf allure-2.30.0.tgz
+        sudo mv allure-2.30.0 /opt/allure
         sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
         allure --version
     - name: Run your tests
