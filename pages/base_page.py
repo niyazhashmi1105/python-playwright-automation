@@ -3,7 +3,7 @@ from playwright.sync_api import Page
 import os
 
 class BasePage:
-    URL: str
+    URL = "https://www.saucedemo.com"
 
     def __init__(self, page: Page) -> None:
         self.page = page
@@ -31,6 +31,9 @@ class BasePage:
     def click_and_wait_for_navigation(self, locator: str):
         with self.page.expect_navigation():
             self.page.locator(locator).click()
+
+    def get_text(self,locator):
+        return self.page.inner_html(locator)
 
     def take_screenshot(self, name: str):
         screenshot_dir = "screenshots"
