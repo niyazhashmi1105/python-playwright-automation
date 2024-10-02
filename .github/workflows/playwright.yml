@@ -31,14 +31,14 @@ jobs:
         sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
         allure --version
     - name: Run your tests
-      run: pytest --alluredir reports/allure-results
+      run: pytest --alluredir allure-results
     - name: Generate Allure Report
-      run: allure generate reports/allure-results --clean
+      run: allure generate allure-results --clean
     - name: Upload Allure Report
       uses: actions/upload-artifact@v4
       with:
         name: allure-report
-        path: reports/allure-results/
+        path: allure-report/
       #run: pytest --tracing=retain-on-failure
       #run: pytest -s -v --html=reports/report.html --video=on --capture=tee-sys
    # - uses: actions/upload-artifact@v4
