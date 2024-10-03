@@ -1,0 +1,40 @@
+name: Playwright Tests in Docker
+
+on:
+  push:
+    branches:
+      - main  # Runs the workflow on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Runs the workflow on pull requests to the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # The host machine where the action will run
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Build the Docker image for Playwright tests
+      - name: Build Docker image
+        run: |
+          docker build -t pytest-playwright-image .
+
+      # Step 4: Run the Playwright tests inside the Docker container and collect the HTML report
+      - name: Run tests and generate report
+        run: |
+          mkdir -p reports  # Create a directory for reports
+          docker run --rm -v $(pwd)/reports:/app/reports pytest-playwright-image
+
+      # Step 5: Upload the HTML report as an artifact
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: reports/report.html  # Upload the HTML report to GitHub Actions artifacts
