@@ -23,20 +23,22 @@ jobs:
         pip install -r requirements.txt
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps
-    - name: Install Allure Commandline
-      run: |
-        sudo apt update
-        sudo apt install openjdk-11-jdk
-        cd /tmp
-        wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.30.0.tgz
-        tar -zxvf allure-2.30.0.tgz
-        sudo mv allure-2.30.0 /opt/allure
-        sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
-        allure --version
+#    - name: Install Allure Commandline
+#      run: |
+#        sudo apt update
+#        sudo apt install openjdk-11-jdk
+#        cd /tmp
+#        wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.30.0.tgz
+#        tar -zxvf allure-2.30.0.tgz
+#        sudo mv allure-2.30.0 /opt/allure
+#        sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+#        allure --version
     - name: Run your tests
+      if: always()
       run: pytest --alluredir allure-results
+      continue-on-error: true
 
-    - name: Load test report history
+    - name: Get Allure history
       uses: actions/checkout@v3
       if: always()
       continue-on-error: true
@@ -49,16 +51,17 @@ jobs:
       uses: simple-elf/allure-report-action@v1.7
       if: always()
       with:
-          gh_pages: gh-pages
+          allure_results: allure-results
           allure_history: allure-history
-          allure_results: build/allure-results
+
     - name: Deploy Allure Report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: always()
-      with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history
-          publish_branch: gh-pages
+      env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+
 #    - name: Upload Allure Report
 #      uses: actions/upload-artifact@v4
 #      with:
