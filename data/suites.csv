@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","374","test_product_header_text[chromium]","tests","Thu Oct 03 12:43:52 UTC 2024","passed","Thu Oct 03 12:43:52 UTC 2024","","test_products_page","",""
+"","341","test_login_page_locked_user_error[chromium]","tests","Thu Oct 03 12:43:51 UTC 2024","passed","Thu Oct 03 12:43:52 UTC 2024","","test_login_page","",""
+"","1323","test_logout[chromium]","tests","Thu Oct 03 12:43:52 UTC 2024","passed","Thu Oct 03 12:43:54 UTC 2024","","test_products_page","",""
+"","628","test_login_page_with_valid_credentials[chromium]","tests","Thu Oct 03 12:43:51 UTC 2024","passed","Thu Oct 03 12:43:51 UTC 2024","","test_login_page","",""
