@@ -1,0 +1,23 @@
+name: Cleanup HTML Report
+
+on:
+  schedule:
+    - cron: '* * * * *'  # Every Sunday at midnight
+
+jobs:
+  cleanup_report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Delete old HTML report
+        run: |
+          if [ -d "reports" && -d "test-results"]; then
+            rm -rf reports
+            rm -rf test-results
+            echo "Old HTML report and videos directories got deleted."
+          else
+            echo "No old report and videos found."
+          fi
