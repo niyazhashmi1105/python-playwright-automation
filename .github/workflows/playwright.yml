@@ -34,7 +34,8 @@ jobs:
 #        sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 #        allure --version
     - name: Run your tests
-      run: pytest -s -v --html=reports/report.html --video=on --capture=tee-sys --slowmo 1000
+      #run: pytest -s -v --html=reports/report.html --video=on --capture=tee-sys --slowmo 1000
+      run: pytest -n 4 --browser chromium --browser firefox --browser webkit --video=on
       #if: always()
       #run: pytest --alluredir allure-results
       #continue-on-error: true
