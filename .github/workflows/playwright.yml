@@ -4,6 +4,9 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+permissions:
+  contents: write
+
 jobs:
   test:
     timeout-minutes: 60
@@ -34,17 +37,17 @@ jobs:
       run: pytest --alluredir allure-results
     - name: Generate Allure Report
       run: allure generate allure-results --clean -o allure-report
-    - name: Upload Allure Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: allure-report
-        path: allure-report/
     - name: Deploy Allure Report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
           publish_branch: gh-pages
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v4
+      with:
+          name: allure-report
+          path: allure-report/
       #run: pytest --tracing=retain-on-failure
       #run: pytest -s -v --html=reports/report.html --video=on --capture=tee-sys
    # - uses: actions/upload-artifact@v4
