@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Thu Oct 03 13:13:44 GMT 2024","Thu Oct 03 13:13:45 GMT 2024","387","tests","test_products_page","","","","test_product_header_text[chromium]",""
+"passed","Thu Oct 03 13:13:43 GMT 2024","Thu Oct 03 13:13:44 GMT 2024","550","tests","test_login_page","","","","test_login_page_with_valid_credentials[chromium]",""
+"passed","Thu Oct 03 13:13:44 GMT 2024","Thu Oct 03 13:13:44 GMT 2024","355","tests","test_login_page","","","","test_login_page_locked_user_error[chromium]",""
+"passed","Thu Oct 03 13:13:45 GMT 2024","Thu Oct 03 13:13:46 GMT 2024","1313","tests","test_products_page","","","","test_logout[chromium]",""
