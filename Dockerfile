@@ -26,4 +26,4 @@ RUN pip install pytest-playwright && playwright install --with-deps
 COPY . /app
 
 # Run pytest with Playwright and generate HTML report
-CMD ["pytest","-v","--html=./reports/report.html"]
+CMD ["pytest","-v","-n 3","--html=./reports/report.html"]
