@@ -1,0 +1,8 @@
+allure-report/
+allure-results/
+test-results/
+reports/
+playwright-results/
+playwright-report/
+.DS_Store
+
