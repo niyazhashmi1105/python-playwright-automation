@@ -25,10 +25,10 @@ README.md: Placeholder for project description and usage guidelines (expected to
 Install Dependencies: Make sure to install the required Python dependencies from requirements.txt
 pip install -r requirements.txt
 
-Running Tests: Use the following command to run the tests:
+**Running Tests:** Use the following command to run the tests:
 pytest
 
-Running Tests in Parallel: To run tests in parallel (e.g., across multiple browsers), use:
+**Running Tests in Parallel:** To run tests in parallel (e.g., across multiple browsers), use:
 pytest -n 3 --browser chromium
 This will run the tests on Chromium, Firefox, and WebKit in parallel.
 
