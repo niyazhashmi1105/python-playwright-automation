@@ -1,0 +1,64 @@
+name: EKS Pytest Playwright Automation
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on push to the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Specify your AWS region
+
+      - name: Update Kubeconfig
+        run: |
+          aws eks --region us-east-1 update-kubeconfig --name pytest-playwright-cluster
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+
+      - name: Build Docker image
+        run: |
+          docker build -t pytest-playwright-test .
+
+      - name: Run Tests in EKS
+        run: |
+          kubectl apply -f k8s/pytest-playwright-pod.yaml
+          kubectl wait --for=condition=Ready pod/pytest-playwright --timeout=60s
+          # Wait for the tests to complete
+          kubectl exec pytest-playwright -- pytest -n 3 --browser chromium --html=reports/report.html
+   #       kubectl wait --for=condition=complete --timeout=600s job/pytest-playwright-test
+   #       kubectl logs job/pytest-playwright-test
+
+      - name: Copy Test Report to Local
+        run: |
+            kubectl cp pytest-playwright:/app/reports/report.html ./reports/report.html
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-report
+          path: ./reports/report.html
+
+
+      - name: Clean up
+        run: |
+          kubectl delete -f k8s/pytest-playwright-pod.yaml
