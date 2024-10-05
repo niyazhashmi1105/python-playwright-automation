@@ -47,11 +47,19 @@ jobs:
       run: |
         mkdir -p ~/.kube
         echo "${{ secrets.KUBECONFIG}}" > ~/.kube/config
+        chmod 600 ~/.kube/config
 
     # Verify kubectl configuration
-#    - name: Verify Kubernetes cluster access
-#      run:
-#        kubectl config view
+    - name: Verify Kubernetes cluster access
+      run:
+        kubectl config view
+    - name: Verify Get nodes
+      run:
+        kubectl get nodes
+    - name: Use current context
+      run:
+        kubectl config use-context docker-desktop
+
 #    - name: Set up kubectl
 #      uses: azure/setup-kubectl@v3
 #      with:
