@@ -12,8 +12,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      KUBECONFIG: ${{ secrets.KUBECONFIG }}  # Store the Kubernetes config as a secret in GitHub
+#    env:
+#      KUBECONFIG: ${{ secrets.KUBECONFIG }}  # Store the Kubernetes config as a secret in GitHub
 
     steps:
     - name: Checkout Repository
