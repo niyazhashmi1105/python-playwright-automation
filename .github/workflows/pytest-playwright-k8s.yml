@@ -54,7 +54,11 @@ jobs:
       run:
         kubectl config view
     - name: Verify Get nodes
-      run:
+      run: |
+        sudo -i
+        swapoff -a
+        exit
+        strace -eopenat kubectl version
         kubectl get nodes
     - name: Use current context
       run:
