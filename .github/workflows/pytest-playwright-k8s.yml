@@ -30,6 +30,12 @@ jobs:
       run: |
           aws eks --region us-east-1 update-kubeconfig --name pytest-playwright-cluster
 
+    # Step 1: Install Kubectl and set up
+    - name: Install kubectl
+      run: | 
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
 
     # Step 1: Build Docker Image for Pytest Playwright Tests
     - name: Set up Docker Buildx
@@ -47,12 +53,6 @@ jobs:
         docker build -t ghcr.io/${{ github.repository }}/pytest-playwright:latest .
         docker push ghcr.io/${{ github.repository }}/pytest-playwright:latest
 
-    # Step 1: Install Kubectl and set up
-    - name: Install kubectl
-      run: | 
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
 
 #    # Set up KUBECONFIG
 #    - name: Set up KUBECONFIG
