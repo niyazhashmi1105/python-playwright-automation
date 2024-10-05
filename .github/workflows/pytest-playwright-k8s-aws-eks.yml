@@ -35,7 +35,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t pytest-playwright .
+            docker build -t pytest-playwright .
 
       - name: Run Tests in EKS
         run: |
