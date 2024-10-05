@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pytest-playwright
+  labels:
+    app: pytest-playwright
+spec:
+  containers:
+  - name: pytest-playwright
+    image: ghcr.io/${{ github.repository }}/pytest-playwright:latest
+    imagePullPolicy: Always
+    command: ["pytest", "-n", "3", "--browser", “chromium”, "--html=/app/reports/report.html"]
+    volumeMounts:
+    - name: reports
+      mountPath: /app/reports
+  restartPolicy: Never
+  volumes:
+  - name: reports
+    emptyDir: {}

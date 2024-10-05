@@ -1,0 +1,67 @@
+name: Run Pytest Playwright on Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    env:
+      KUBECONFIG: ${{ secrets.KUBECONFIG }}  # Store the Kubernetes config as a secret in GitHub
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    # Step 1: Build Docker Image for Pytest Playwright Tests
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t ghcr.io/${{ github.repository }}/pytest-playwright:latest .
+        docker push ghcr.io/${{ github.repository }}/pytest-playwright:latest
+
+    # Step 2: Deploy Pod to Kubernetes Cluster
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'v1.22.0'
+
+    - name: Deploy Pod to Kubernetes
+      run: |
+        kubectl apply -f k8s/pytest-playwright-pod.yaml
+
+    - name: Wait for Pod to be Running
+      run: |
+        kubectl wait --for=condition=Ready pod/pytest-playwright --timeout=60s
+
+    # Step 3: Run Pytest Playwright Tests in Kubernetes Pod
+    - name: Run Playwright Tests
+      run: |
+        kubectl exec pytest-playwright -- pytest -n 3 --browser chromium --html=reports/report.html
+
+    # Step 4: Fetch Test Results (HTML Report)
+    - name: Copy Test Report to Local
+      run: |
+        kubectl cp pytest-playwright:/app/reports/report.html ./reports/report.html
+
+    # Step 5: Upload Test Results to GitHub
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: pytest-report
+        path: ./reports/report.html
