@@ -55,14 +55,12 @@ jobs:
         kubectl config view
     - name: Verify Get nodes
       run: |
-        sudo -i
-        swapoff -a
-        exit
-        strace -eopenat kubectl version
-        kubectl get nodes
-    - name: Use current context
-      run:
+        kubectl cluster-info
         kubectl config use-context docker-desktop
+#       kubectl get nodes
+#    - name: Use current context
+#      run:
+#        kubectl config use-context docker-desktop
 
 #    - name: Set up kubectl
 #      uses: azure/setup-kubectl@v3
