@@ -27,4 +27,4 @@ RUN pip install --upgrade pip \
 COPY . /app
 
 # Run pytest with Playwright and generate HTML report
-CMD ["pytest","-v","-n", "3","--browser","firefox","--html=./reports/report.html"]
+#CMD ["pytest","-v","-n", "3","--browser","firefox","--html=./reports/report.html"]
