@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pytest-playwright-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: pytest-playwright
+        image: pytest-playwright-test:latest  # Replace with your built Docker image
+        command: ["pytest", "--html=report.html"]  # Adjust command based on your test setup
+        volumeMounts:
+        - name: report-volume
+          mountPath: /app/reports
+      restartPolicy: Never
+      volumes:
+      - name: report-volume
+        emptyDir: {}
+  backoffLimit: 4

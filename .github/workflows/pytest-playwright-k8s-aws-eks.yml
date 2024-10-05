@@ -39,16 +39,16 @@ jobs:
 
       - name: Run Tests in EKS
         run: |
-          kubectl apply -f k8s/pytest-playwright-pod.yaml
-          kubectl wait --for=condition=Ready pod/pytest-playwright --timeout=60s
+          kubectl apply -f k8s/pytest-playwright-deployment.yaml
+   #       kubectl wait --for=condition=Ready pod/pytest-playwright --timeout=60s
           # Wait for the tests to complete
-          kubectl exec pytest-playwright -- pytest -n 3 --browser chromium --html=reports/report.html
-   #       kubectl wait --for=condition=complete --timeout=600s job/pytest-playwright-test
-   #       kubectl logs job/pytest-playwright-test
+   #       kubectl exec pytest-playwright -- pytest -n 3 --browser chromium --html=reports/report.html
+          kubectl wait --for=condition=complete --timeout=600s job/pytest-playwright-test
+          kubectl logs job/pytest-playwright-test
 
       - name: Copy Test Report to Local
         run: |
-            kubectl cp pytest-playwright:/app/reports/report.html ./reports/report.html
+            kubectl cp pytest-playwright-test:/app/reports/report.html ./reports/report.html
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v3
