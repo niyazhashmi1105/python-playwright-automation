@@ -36,10 +36,25 @@ jobs:
         docker push ghcr.io/${{ github.repository }}/pytest-playwright:latest
 
     # Step 2: Deploy Pod to Kubernetes Cluster
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'v1.22.0'
+    - name: Install kubectl
+    - run: | 
+        curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+
+    # Set up KUBECONFIG
+    - name: Set up KUBECONFIG
+    - run: |
+        mkdir -p ~/.kube
+        echo "${{ secrets.KUBECONFIG_CONTENT }}" > ~/.kube/config
+
+    # Verify kubectl configuration
+    - name: Verify Kubernetes cluster access
+    - run: kubectl config view
+#    - name: Set up kubectl
+#      uses: azure/setup-kubectl@v3
+#      with:
+#        version: 'v1.22.0'
 
     - name: Deploy Pod to Kubernetes
       run: |
