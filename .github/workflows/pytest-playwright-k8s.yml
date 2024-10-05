@@ -49,9 +49,9 @@ jobs:
         echo "${{ secrets.KUBECONFIG}}" > ~/.kube/config
 
     # Verify kubectl configuration
-    - name: Verify Kubernetes cluster access
-      run:
-        kubectl config view
+#    - name: Verify Kubernetes cluster access
+#      run:
+#        kubectl config view
 #    - name: Set up kubectl
 #      uses: azure/setup-kubectl@v3
 #      with:
