@@ -28,7 +28,7 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t pytest-playwright .
-          docker tag pytest-playwright:latest 326226782879.dkr.ecr.us-east-1.amazonaws.com/pytest-playwright:latest
+          docker tag pytest-playwright:latest 326226782879.dkr.ecr.us-east-1.amazonaws.com/pytest-playwright-test:latest
 
       - name: Push Docker image to ECR
         run: |
