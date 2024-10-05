@@ -80,7 +80,7 @@ jobs:
 #        version: 'v1.22.0'
     - name: Deploy Pod to Kubernetes
       run: |
-        kubectl apply -f k8s/pytest-playwright-pod.yaml
+        kubectl apply -f k8s/pytest-playwright-pod.yaml --validate=false
 
     - name: Wait for Pod to be Running
       run: |
