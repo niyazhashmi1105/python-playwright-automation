@@ -9,7 +9,7 @@ spec:
   - name: pytest-playwright
     image: pytest-playwright:latest
     imagePullPolicy: Always
-    command: ["pytest", "-n", "3", "--browser", “chromium”, "--html=/app/reports/report.html"]
+    command: ["pytest", "-n", "3", "--browser", “firefox”, "--html=/app/reports/report.html"]
     volumeMounts:
     - name: reports
       mountPath: /app/reports

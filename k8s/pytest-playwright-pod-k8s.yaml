@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pytest-playwright-job
+spec:
+  template:
+   spec:
+    containers:
+    - name: playwright-docker
+      image: niyazautomationqa/playwright-docker:pytest-playwright  # Your Docker image
+      volumeMounts:
+      - name: report-volume
+        mountPath: /app/reports
+      command: ["pytest", "-n", "3","--browser","firefox","--html=/app/reports/report.html", "--self-contained-html"]
+    restartPolicy: Never
+    volumes:
+      - name: report-volume
+#        persistentVolumeClaim:
+#          claimName: my-pvc

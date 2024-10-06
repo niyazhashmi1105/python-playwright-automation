@@ -44,13 +44,17 @@ jobs:
         run: |
           aws eks --region us-east-1 update-kubeconfig --name pytest-playwright-cluster
 
+      - name: Test kubectl connection
+        run: |
+            kubectl get nodes
+
       - name: Deploy Playwright Pod to EKS
         run: |
           kubectl apply -f k8s/pytest-playwright-pod.yaml --validate=false
 
       - name: Check pod status
         run: |
-          kubectl get pods
+          kubectl get pods --watch
 
       - name: Fetch logs of the test pod
         run: |
