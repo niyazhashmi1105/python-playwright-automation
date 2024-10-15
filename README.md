@@ -1,3 +1,5 @@
+[![Playwright Tests in Docker](https://github.com/niyazhashmi1105/python-playwright-automation/actions/workflows/docker.yml/badge.svg?branch=main)](https://github.com/niyazhashmi1105/python-playwright-automation/actions/workflows/docker.yml)
+
 **Python Playwright Automation Framework**
 This repository contains an automation framework using the Python programming language, leveraging Playwright and pytest for automated web application testing.
 
